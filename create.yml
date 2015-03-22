@@ -1,0 +1,5 @@
+data:
+  image: dmoraschi/data-app
+  volumes:
+    - /var/www/app:/data/app
+    - /var/www/log:/data/log
