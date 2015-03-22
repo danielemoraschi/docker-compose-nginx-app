@@ -23,7 +23,7 @@ sudo docker build -t dmoraschi/centos-phpcomposer .
 
 
 
-echo "Create Symfony project? [symfony|silex|laravel|kohana|n]:"
+echo "Create composer project? [symfony|silex|laravel|kohana|n]:"
 read create
 
 

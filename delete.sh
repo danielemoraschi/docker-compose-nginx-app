@@ -2,7 +2,12 @@
 
 source app.cfg
 
-#sudo rm -Rf ${APP_ROOT}/*
+echo "Remove project directory? [y/n]"
+read remove
+
+if [ $remove = 'y' ]; then
+    sudo rm -Rf ${APP_ROOT}/*
+fi
 
 sudo docker kill ${APP_NAME}-app
 sudo docker kill ${APP_NAME}-php
