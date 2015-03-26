@@ -5,6 +5,7 @@ source app.cfg
 
 sudo docker pull dmoraschi/app-volume
 sudo docker pull dmoraschi/centos-php
+sudo docker pull dmoraschi/centos-phpcphalcon
 sudo docker pull dmoraschi/centos-phpcomposer
 sudo docker pull dmoraschi/centos-nginx
 
@@ -52,7 +53,7 @@ if [ $create = 'kohana' ]; then
 fi
 
 sudo docker run --privileged=true --name ${APP_NAME}-php \
-    --volumes-from ${APP_NAME}-app -d dmoraschi/centos-php
+    --volumes-from ${APP_NAME}-app -d dmoraschi/centos-phpcphalcon
 
 sudo docker run --privileged=true --name ${APP_NAME}-nginx \
     --volumes-from ${APP_NAME}-app -p ${APP_WEB}:80 --link ${APP_NAME}-php:fpm -d dmoraschi/centos-nginx
