@@ -1,8 +1,7 @@
 data:
   image: dmoraschi/app-volume
   volumes:
-    - "./app:/data/app"
-    - "./log:/data/log"
+    - "./:/data"
 php:
   image: dmoraschi/centos-php
   container_name: fpm
