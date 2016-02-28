@@ -1,0 +1,20 @@
+data:
+  image: dmoraschi/app-volume
+  volumes:
+    - "./app:/data/app"
+    - "./log:/data/log"
+php:
+  image: dmoraschi/centos-php
+  container_name: fpm
+  volumes_from:
+    - data
+  expose:
+    - "9000"
+nginx:
+  image: dmoraschi/centos-nginx
+  volumes_from:
+    - data
+  links:
+    - php:fpm
+  ports:
+    - "8080:80"
