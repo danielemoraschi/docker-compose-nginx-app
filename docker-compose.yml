@@ -9,11 +9,40 @@ php:
     - data
   expose:
     - "9000"
-nginx:
+nginx1:
   image: dmoraschi/centos-nginx
+  container_name: nginx1
   volumes_from:
     - data
   links:
     - php:fpm
+  expose:
+    - "80"
+nginx2:
+  image: dmoraschi/centos-nginx
+  container_name: nginx2
+  volumes_from:
+    - data
+  links:
+    - php:fpm
+  expose:
+    - "80"
+nginx3:
+  image: dmoraschi/centos-nginx
+  container_name: nginx3
+  volumes_from:
+    - data
+  links:
+    - php:fpm
+  expose:
+    - "80"
+haproxy:
+  image: haproxy:1.5
   ports:
-    - "8080:80"
+    - "8081:80"
+  links:
+    - nginx1:nginx1
+    - nginx2:nginx2
+    - nginx3:nginx3
+  volumes:
+    - ./haproxy/:/usr/local/etc/haproxy/:ro
