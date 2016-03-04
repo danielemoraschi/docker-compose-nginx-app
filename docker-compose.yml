@@ -2,44 +2,44 @@ data:
   image: dmoraschi/app-volume
   volumes:
     - "./:/data"
-php:
-  image: dmoraschi/centos-php
-  container_name: fpm
+php1:
+  image: dmoraschi/centos-phpcphalcon
   volumes_from:
     - data
-  expose:
-    - "9000"
 nginx1:
   image: dmoraschi/centos-nginx
-  container_name: nginx1
   volumes_from:
     - data
   links:
-    - php:fpm
-  expose:
-    - "80"
+    - php1:fpm1
+    - php1:fpm2
+    - php1:fpm3
+  ports:
+    - "8001:80"
 nginx2:
   image: dmoraschi/centos-nginx
-  container_name: nginx2
   volumes_from:
     - data
   links:
-    - php:fpm
-  expose:
-    - "80"
+    - php1:fpm1
+    - php1:fpm2
+    - php1:fpm3
+  ports:
+    - "8002:80"
 nginx3:
   image: dmoraschi/centos-nginx
-  container_name: nginx3
   volumes_from:
     - data
   links:
-    - php:fpm
-  expose:
-    - "80"
+    - php1:fpm1
+    - php1:fpm2
+    - php1:fpm3
+  ports:
+    - "8003:80"
 haproxy:
   image: haproxy:1.5
   ports:
-    - "8081:80"
+    - "8080:80"
   links:
     - nginx1:nginx1
     - nginx2:nginx2
