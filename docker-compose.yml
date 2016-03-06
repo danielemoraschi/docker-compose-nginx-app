@@ -1,48 +1,25 @@
-data:
-  image: dmoraschi/app-volume
+fpm:
+  image: dmoraschi/centos-phpcphalcon
+  restart: always
   volumes:
     - "./:/data"
-php1:
-  image: dmoraschi/centos-phpcphalcon
-  volumes_from:
-    - data
-nginx1:
+
+nginx:
   image: dmoraschi/centos-nginx
+  restart: always
   volumes_from:
-    - data
+    - fpm
+  volumes:
+    - ./nginx/:/etc/nginx/conf.d/:ro
   links:
-    - php1:fpm1
-    - php1:fpm2
-    - php1:fpm3
-  ports:
-    - "8001:80"
-nginx2:
-  image: dmoraschi/centos-nginx
-  volumes_from:
-    - data
-  links:
-    - php1:fpm1
-    - php1:fpm2
-    - php1:fpm3
-  ports:
-    - "8002:80"
-nginx3:
-  image: dmoraschi/centos-nginx
-  volumes_from:
-    - data
-  links:
-    - php1:fpm1
-    - php1:fpm2
-    - php1:fpm3
-  ports:
-    - "8003:80"
+    - fpm
+
 haproxy:
   image: haproxy:1.5
+  restart: always
   ports:
     - "8080:80"
   links:
-    - nginx1:nginx1
-    - nginx2:nginx2
-    - nginx3:nginx3
+    - nginx
   volumes:
     - ./haproxy/:/usr/local/etc/haproxy/:ro

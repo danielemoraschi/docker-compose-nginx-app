@@ -1,7 +1,7 @@
 CURRENT_DIRECTORY := $(shell pwd)
 
 start:
-    @docker-compose up -d
+    @docker-compose up --no-deps -d
 
 clean:
     @docker-compose rm --force
@@ -9,21 +9,19 @@ clean:
 stop:
     @docker-compose stop
 
-status:
+ps:
     @docker-compose ps
 
 cli:
-    @docker-compose run --rm web bash
+    @docker exec -ti $1 bash
 
 log:
-    @tail -f logs/nginx-error.log
+    @docker-compose logs
 
 cc:
-    @docker-compose run --rm web drush cc all
+    @docker-compose run --rm $1 $2
 
 restart:
-    @docker-compose stop
-    @docker-compose start
-    @tail -f logs/nginx-error.log
+    @docker-compose restart
 
 .PHONY: clean start stop status cli log cc restart
