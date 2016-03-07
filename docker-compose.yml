@@ -2,7 +2,9 @@ fpm:
   image: dmoraschi/centos-phpcphalcon
   restart: always
   volumes:
-    - "./:/data"
+    - ./:/data
+    # docker-compose run fpm ssh-agent bash -c 'ssh-add /.ssh/id_rsa; composer install --no-dev'
+    - ~/.ssh/:/.ssh
 
 nginx:
   image: dmoraschi/centos-nginx
